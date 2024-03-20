@@ -23,7 +23,8 @@ while True:
     if command == "sql":
         cursor.execute(text)
         for row in cursor:
-            s.send(row.encode('utf-8'))
+            print(row)
+            s.send(str(row).encode())
     if command == "delete":
         # delete the file and quit
         break

@@ -2,7 +2,7 @@
 import socket
 
 s = socket.socket()
-host = socket.gethostname()  # Get local machine name
+host = "192.168.20.9"  # Get local machine name
 port = 12345  # Reserve a port for your service
 s.bind((host, port))  # Bind to the port
 

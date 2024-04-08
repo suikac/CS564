@@ -12,7 +12,7 @@ while True:  # Establish connection with client
     if message == "exit":
         break
     if " " not in message:
-        print("please input the formate of [command] [post_body] ")
+        print("please input the formate of [command] [post_body], post body is optional but space is mandatory")
     command, post_body = message.split(" ", 1)
     r = requests.post("http://{}:{}/{}".format(host, port, command), data={"parameter": post_body})
     print(r.content)

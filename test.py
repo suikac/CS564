@@ -9,7 +9,7 @@ t = ("This", "is", "a", "test")
 print(str(t))
 def test():
     while True:
-        time.sleep(1)
+        print("here")
 t = threading.Thread(target=test)
 t.start()
 t.join(10)

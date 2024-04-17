@@ -2,7 +2,7 @@ import redis
 import os
 import sys
 # Connect to Redis
-r = redis.StrictRedis(host= sys.argv[0], port=6379, db=0)
+r = redis.StrictRedis(host= sys.argv[1], port=6379, db=0)
 
 def upload_file(file_path, target_file):
     # Read the content of the file
@@ -25,7 +25,7 @@ def upload_file(file_path, target_file):
     print("successfully saved file: {}".format(target_file))
 
 # Usage example
-source_file = sys.argv[1]
-target_file = sys.argv[2]
+source_file = sys.argv[2]
+target_file = sys.argv[3]
 
 upload_file(source_file, target_file)

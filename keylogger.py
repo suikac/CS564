@@ -1,26 +1,26 @@
 import curses
 
-# initialize curses
+# 初始化 curses
 stdscr = curses.initscr()
 curses.noecho()
 stdscr.keypad(True)
 
-# record keylogger events
+# 记录按键事件
 keys = []
 
 try:
     while True:
         key = stdscr.getch()
         keys.append(key)
-        if key == ord('q'):  # push 'q' to quit
+        if key == ord('q'):  # 按下 'q' 键退出
             break
 finally:
-    # revert back to initialized settings
+    # 恢复终端设置
     curses.nocbreak()
     stdscr.keypad(False)
     curses.echo()
     curses.endwin()
 
-# print recorded keys
+# 打印记录的按键
 print(keys)
 

@@ -20,7 +20,7 @@ instead of using virtual environment, just download everything inside the c2_ven
 For python version, please refer to _pycache_
 
 ## running
-After activate virutal environment and install the requirements. We can start c2 client and implant.py file:
+After activate virutal environment and install the requirements. We can start c2 client and implant.py file, make sure the IP address and port matches with the server.py:
 
 `python implant.py`
 

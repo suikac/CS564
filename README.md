@@ -1,8 +1,11 @@
 # CS564
-How to use redis_file_upload.py
-Just run python3 redis_file_upload.py 192.168.20.21 /home/labuser/hello_world.txt /home/labuser/hello_world.txt
 
-# c2 readme
+# Redis file upload
+How to use redis_file_upload.py
+Just run python3 redis_file_upload.py 192.168.20.21 /home/labuser/hello_world.txt /home/labuser/hello_world.txt, 
+assume the target machine is running Redis, and the ip address is 192.168.20.21, the first directory is local file, and the second one is the directory of the remote one.
+
+# c2 readme a
 ## installation
 create virutalenv:
 

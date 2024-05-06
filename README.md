@@ -40,3 +40,7 @@ Using 'sql {query}' command, the query string will be executed in implant server
 Using 'shot' command, the implant will take a screenshot and send back it to c2. The c2 client will pop up a new window show the caputured image.
 ### delete file
 Using 'delete {filepath}' command, if the filepath file exists, it will be deleted.
+usages:
+1. directly delete file, command: delete fileName
+2. delete file within a directory, command: delete test/fileName
+Can delete implant.py itself withing killing the process

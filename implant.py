@@ -101,23 +101,37 @@ def sql_file():
     return result
 
 @app.post('/delete')
-# do the file deletion
+# Define the route and the request method
 def delete_file():
+    # Define a function to check if a directory is not empty
     def notempty(filepath):
+        # Retrieve all files and folders inside the specified directory
         files = filepath.rglob("*")
         for file in files:
+             # Print each file path and return True if any file is found
             print(file)
             return True
+        # Return False if the directory is empty
         return False
+    # Get JSON data from the request
     jdata = request.json
+     # Check if the 'filename' key is provided in the JSON request
     if jdata.get('filename') is None:
+         # Return an error message if 'filename' is not provided
         return "empty argument: filename"
+     # Create a pathlib.Path object from the 'filename' provided
     filepath = pathlib.Path(jdata.get('filename'))
+     # Check if the file or directory exists
     if filepath.exists() == False:
+         # Return an error message if the file or directory does not exist
         return f"filepath: {filepath.resolve()} doesn't exists."
+     # Check if the path is a directory and it is not empty
     if filepath.is_dir() == True and notempty(filepath):
+        # Return a message indicating the directory is not empty
         return f'filepath: {filepath.resolve()} is directory and not empty.'
+    # Delete the file or empty directory
     filepath.unlink()
+    # Return a success message indicating the file has been deleted
     return f'delete file: {filepath.resolve()} success.'
     
 @app.post('/key')

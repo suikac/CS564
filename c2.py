@@ -6,7 +6,7 @@ import os
 import base64
 from utils import *
 
-host = "localhost"
+host = "192.168.20.4"
 port = 9000
 
 baseurl = f'http://{host}:{port}'

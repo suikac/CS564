@@ -68,7 +68,7 @@ while True:
         print(data)
         continue
     if 'shutdown' in message:
-        res = requests.get(urljoin(baseurl, '/shutdown'))
+        res = requests.post(urljoin(baseurl, '/shutdown'))
         print(res.text)
         break
     if " " not in message:
